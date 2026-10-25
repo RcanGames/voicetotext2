@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <title>VoiceToText</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">V</div>
+                <div>
+                    <h1>VoiceToText</h1>
+                    <span>VOICE STUDIO</span>
+                </div>
+            </div>
+
+            <div class="side-label">ÇALIŞMA ALANI</div>
+            <button class="nav-item active" id="navDictation">
+                <span>🎙️</span> Sesli yazım
+            </button>
+            <button class="nav-item" id="navAudio">
+                <span>🎧</span> Ses dosyası
+            </button>
+
+            <div class="sidebar-bottom">
+                <div class="status-dot"></div>
+                <span>Windows masaüstü</span>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <div class="eyebrow">KONUŞMANI METNE DÖNÜŞTÜR</div>
+                    <h2>Merhaba! Hazır mısın?</h2>
+                    <p>Sesini metne dönüştür, düzenle ve kaydet.</p>
+                </div>
+                <div class="avatar">VT</div>
+            </header>
+
+            <section class="record-card">
+                <div class="record-heading">
+                    <div>
+                        <span class="eyebrow">CANLI DİKTE</span>
+                        <h3>Sesli yazım</h3>
+                    </div>
+                    <span class="status-pill" id="statusPill">
+                        <span class="status-dot"></span>
+                        Hazır
+                    </span>
+                </div>
+
+                <div class="mic-area">
+                    <div class="mic-halo" id="micHalo">
+                        <button class="mic-button" id="micButton"
+                                aria-label="Dikteyi başlat">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="9" y="2" width="6" height="13"
+                                      rx="3"></rect>
+                                <path d="M5 10a7 7 0 0 0 14 0"></path>
+                                <path d="M12 17v5"></path>
+                                <path d="M8 22h8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <h3 id="micTitle">Konuşmaya başla</h3>
+                    <p id="micDescription">
+                        Mikrofon düğmesine dokunarak dikteyi başlat.
+                    </p>
+                </div>
+
+                <div class="record-actions">
+                    <button class="button button-primary" id="startButton">
+                        <span>●</span> Dikteyi başlat
+                    </button>
+                    <button class="button button-secondary" id="stopButton"
+                            disabled>
+                        Durdur
+                    </button>
+                </div>
+                <p class="notice" id="notice">
+                    Konuşma tanıma servisi henüz bağlanmadı.
+                </p>
+            </section>
+
+            <section class="editor-card">
+                <div class="editor-heading">
+                    <div>
+                        <span class="eyebrow">METİN ÇALIŞMA ALANI</span>
+                        <h3>Transkripsiyon</h3>
+                    </div>
+                    <span class="word-count" id="wordCount">0 kelime</span>
+                </div>
+
+                <textarea id="transcript"
+                          placeholder="Konuşman metin olarak burada görünecek. İstersen metni buradan düzenleyebilirsin..."
+                          spellcheck="true"></textarea>
+
+                <div class="editor-footer">
+                    <span id="editorStatus">Düzenlemeye hazır</span>
+                    <div class="editor-actions">
+                        <button class="button button-secondary" id="clearButton">
+                            Temizle
+                        </button>
+                        <button class="button button-primary" id="saveButton">
+                            Metni kaydet
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <span>VoiceToText</span>
+                <span>Windows Desktop Edition</span>
+            </footer>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
