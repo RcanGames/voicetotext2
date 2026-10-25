@@ -43,8 +43,7 @@ public partial class MainWindow : Window
                 return;
             }
 
-            Browser.CoreWebView2.Navigate(
-                new Uri(UiPath).AbsoluteUri);
+            Browser.CoreWebView2.Navigate(new Uri(UiPath).AbsoluteUri);
         }
         catch (Exception ex)
         {
@@ -62,9 +61,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            using var document =
-                JsonDocument.Parse(e.WebMessageAsJson);
-
+            using var document = JsonDocument.Parse(e.WebMessageAsJson);
             var root = document.RootElement;
 
             if (!root.TryGetProperty("action", out var actionElement))
@@ -109,13 +106,11 @@ public partial class MainWindow : Window
         }
     }
 
-    private void SaveText(string text)
+    private async void SaveText(string text)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
-            MessageBox.Show(
-                "Kaydedilecek metin yok.",
-                "VoiceToText");
+            MessageBox.Show("Kaydedilecek metin yok.", "VoiceToText");
             return;
         }
 
@@ -130,27 +125,38 @@ public partial class MainWindow : Window
         if (dialog.ShowDialog() != true)
             return;
 
-        File.WriteAllText(
-            dialog.FileName,
-            text,
-            new System.Text.UTF8Encoding(true));
+        try
+        {
+            File.WriteAllText(
+                dialog.FileName,
+                text,
+                new System.Text.UTF8Encoding(true));
 
-        _ = SendStatusAsync("Metin kaydedildi.");
+            await SendStatusAsync("Metin kaydedildi.");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                "Dosya kaydedilemedi.\n\n" + ex.Message,
+                "VoiceToText",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
     }
 
-    private void SelectAudio()
+    private async void SelectAudio()
     {
         var dialog = new OpenFileDialog
         {
             Title = "Ses dosyası seç",
             Filter =
-                "Ses dosyaları|*.wav;*.mp3;*.m4a;*.flac;*.ogg;*.wma|" +
-                "Tüm dosyalar|*.*"
+                "Ses dosyaları (*.wav;*.mp3;*.m4a;*.flac;*.ogg;*.wma)|*.wav;*.mp3;*.m4a;*.flac;*.ogg;*.wma|" +
+                "Tüm dosyalar (*.*)|*.*"
         };
 
         if (dialog.ShowDialog() == true)
         {
-            _ = SendStatusAsync(
+            await SendStatusAsync(
                 "Dosya seçildi: " +
                 Path.GetFileName(dialog.FileName) +
                 ". Ses çözümleme motoru henüz bağlanmadı.");
