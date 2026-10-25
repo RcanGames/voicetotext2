@@ -110,7 +110,9 @@ public partial class MainWindow : Window
     {
         if (string.IsNullOrWhiteSpace(text))
         {
-            MessageBox.Show("Kaydedilecek metin yok.", "VoiceToText");
+            MessageBox.Show(
+                "Kaydedilecek metin yok.",
+                "VoiceToText");
             return;
         }
 
@@ -163,10 +165,10 @@ public partial class MainWindow : Window
         }
     }
 
-    private async Task SendStatusAsync(string text)
+    private Task SendStatusAsync(string text)
     {
         if (Browser.CoreWebView2 is null)
-            return;
+            return Task.CompletedTask;
 
         string json = JsonSerializer.Serialize(new
         {
@@ -174,6 +176,8 @@ public partial class MainWindow : Window
             text
         });
 
-        await Browser.CoreWebView2.PostWebMessageAsJson(json);
+        Browser.CoreWebView2.PostWebMessageAsJson(json);
+
+        return Task.CompletedTask;
     }
 }
